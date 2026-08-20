@@ -1,0 +1,37 @@
+{
+    "Review_Script":
+    "SELECT accomplishments, learnings,blockers FROM daily_logs",
+
+    "Learning_table_Script":
+    "CREATE TABLE IF NOT EXISTS learning_tracker ( id INTEGER PRIMARY KEY AUTOINCREMENT, learning_date TEXT,category TEXT,learning TEXT);",
+    
+    "Table_View_Script":
+    "SELECT name FROM sqlite_master WHERE type='table'",
+    
+    "Learning_Concepts_Items":
+    ["Guidewire","AI","Python","SQL","Testing","TypeScript"],
+    
+    "Learning_Category":
+    ["Daily Review","Learning Tracker","Weekly Review","Certification Tracker","Monthly Review","AI Coach","View History"],
+    
+    "Save_Daily_review_Script":
+    "INSERT INTO daily_logs(log_date,accomplishments,learnings,blockers,tomorrow_plan,productivity)VALUES(?, ?, ?, ?, ?, ?)",
+    
+    "Insert_Learning_tracker_Script":
+    "INSERT INTO learning_tracker(learning_date,category,learning)VALUES(?, ?, ?)",
+    
+    "View_History_Script":
+    "SELECT * FROM daily_logs ORDER BY id DESC",
+    
+    "Daily_Logs_Table_Script":
+    "CREATE TABLE IF NOT EXISTS daily_logs(id INTEGER PRIMARY KEY AUTOINCREMENT,log_date TEXT,accomplishments TEXT,learnings TEXT,blockers TEXT,tomorrow_plan TEXT,productivity INTEGER)",
+    
+    "Certification_table_Script":
+    "CREATE TABLE IF NOT EXISTS certifications(id INTEGER PRIMARY KEY AUTOINCREMENT, Certification_name TEXT, progress TEXT, target_date TEXT, status TEXT)",
+    
+    "Status_List":
+    ["Not Started","In Progress","Completed"],
+    
+    "Saving_Certification_Button_Script":
+    "INSERT INTO certifications(certification_name,progress,target_date,status)VALUES(?,?,?,?)"
+}

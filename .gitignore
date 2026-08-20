@@ -1,0 +1,23 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+.venv/
+
+# SQLite
+logs.db
+*.db
+
+# Evaluation
+.deepeval/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
