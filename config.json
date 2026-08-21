@@ -2,6 +2,24 @@
     "Review_Script":
     "SELECT accomplishments, learnings,blockers FROM daily_logs",
 
+    "Dashboard_Daily_Logs_Script":
+    "SELECT COUNT(*) FROM daily_logs",
+
+    "Learning_track_Logs_Script":
+    "SELECT COUNT(*) FROM learning_tracker",
+    
+    "Certificate_Logs_Script":
+    "SELECT COUNT(*) FROM certifications",
+
+    "Productivity_Trend_Script":
+    "SELECT log_date,productivity FROM daily_logs ORDER BY log_date",
+    
+    "certification_Dashboard_Script":
+    "SELECT certification_name, progress FROM certifications",
+
+    "learning_tracker_category_count_Script":
+    "SELECT category,COUNT(*) total FROM learning_tracker GROUP BY category",
+
     "Learning_table_Script":
     "CREATE TABLE IF NOT EXISTS learning_tracker ( id INTEGER PRIMARY KEY AUTOINCREMENT, learning_date TEXT,category TEXT,learning TEXT);",
     
@@ -12,7 +30,7 @@
     ["Guidewire","AI","Python","SQL","Testing","TypeScript"],
     
     "Learning_Category":
-    ["Daily Review","Learning Tracker","Weekly Review","Certification Tracker","Monthly Review","AI Coach","View History"],
+    ["Dashboard","Daily Review","Learning Tracker","Weekly Review","Certification Tracker","Monthly Review","AI Coach","View History"],
     
     "Save_Daily_review_Script":
     "INSERT INTO daily_logs(log_date,accomplishments,learnings,blockers,tomorrow_plan,productivity)VALUES(?, ?, ?, ?, ?, ?)",
