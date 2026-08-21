@@ -31,31 +31,50 @@ log.basicConfig(
 st.markdown("""
 <style>
 
-/* Main App Background */
+/* Main App Background (Soft Cream/Sepia) */
 .stApp {
-    background-color: #0f172a;
+    background-color: #faf6ee;
+    color: #1c1917; /* Dark charcoal text for maximum readability */
 }
 
-/* Headers */
-h1, h2, h3 {
-    color: #f8fafc !important;
+/* Headers (Fixed: Swapped from white to dark charcoal) */
+h1, h2, h3, [data-testid="stHeader"] {
+    color: #1c1917 !important;
 }
 
-/* Sidebar */
+/* Sidebar (Maintained clean, deep navy dark mode) */
 section[data-testid="stSidebar"] {
-    background-color: #1e293b;
+    background-color: #1e293b !important;
     border-right: 1px solid #334155;
 }
 
-/* Text */
-p, label, div {
-    color: #e2e8f0;
+/* Target all text metrics inside the main block to be dark */
+[data-testid="stMainBlockContainer"] p, 
+[data-testid="stMainBlockContainer"] label, 
+[data-testid="stMainBlockContainer"] span,
+[data-testid="stMetricValue"] div,
+[data-testid="stMetricLabel"] div {
+    color: #1c1917 !important;
+}
+
+/* Sidebar Specific Text (Kept light for the dark background) */
+section[data-testid="stSidebar"] p, 
+section[data-testid="stSidebar"] label, 
+section[data-testid="stSidebar"] span, 
+section[data-testid="stSidebar"] div {
+    color: #e2e8f0 !important;
+}
+
+/* Interactive Element Dropdowns in Main Area (Fixed contrast) */
+[data-testid="stMainBlockContainer"] .stSelectbox div,
+[data-testid="stMainBlockContainer"] .stSelectbox span {
+    color: #1c1917 !important;
 }
 
 /* Buttons */
 .stButton button {
     background-color: #3b82f6;
-    color: white;
+    color: white !important;
     border-radius: 10px;
     border: none;
     padding: 0.6rem 1rem;
@@ -66,15 +85,24 @@ p, label, div {
     background-color: #2563eb;
 }
 
-/* Input Fields */
-.stTextInput input,
-.stTextArea textarea {
-    background-color: #1e293b;
-    color: white;
+/* Input Fields (Ensured inputs match the text requirements of their containers) */
+[data-testid="stMainBlockContainer"] .stTextInput input,
+[data-testid="stMainBlockContainer"] .stTextArea textarea {
+    background-color: #ffffff;
+    color: #1c1917 !important;
+    border: 1px solid #cbd5e1;
     border-radius: 8px;
 }
 
-/* Selectbox */
+section[data-testid="stSidebar"] .stTextInput input,
+section[data-testid="stSidebar"] .stTextArea textarea {
+    background-color: #0f172a;
+    color: #ffffff !important;
+    border: 1px solid #334155;
+    border-radius: 8px;
+}
+
+/* Selectbox Formatting */
 .stSelectbox div {
     border-radius: 8px;
 }
@@ -86,6 +114,7 @@ p, label, div {
 
 </style>
 """, unsafe_allow_html=True)
+
 
 with open("config.json", "r") as file:
     config_file = json.load(file)
@@ -115,6 +144,53 @@ page = st.sidebar.selectbox(
     "Select Module",
     config_file["Learning_Category"])
 
+if page == "Dashboard":
+    st.header("Dashboard")
+    conn = get_connection()
+    cursor = conn.cursor()
+    total_logs = cursor.execute(config_file["Dashboard_Daily_Logs_Script"]).fetchone()[0]
+    total_learnings = cursor.execute(config_file["Learning_track_Logs_Script"]).fetchone()[0]
+    total_certifications = cursor.execute(config_file["Certificate_Logs_Script"]).fetchone()[0]
+    avg_productivity = cursor.execute("""SELECT AVG(productivity)FROM daily_logs""").fetchone()[0]
+
+    if avg_productivity is None:
+        avg_productivity = 0
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric("Daily Logs",total_logs)
+    col2.metric("Learnings",total_learnings)
+    col3.metric("Certifications",total_certifications)
+    col4.metric("Avg Productivity",round(avg_productivity, 2))
+
+    st.subheader("Productivity Trend")
+    productivity_df = pd.read_sql_query(config_file["Productivity_Trend_Script"],conn)
+
+    if not productivity_df.empty:
+        st.line_chart(productivity_df.set_index("log_date"))
+
+
+    st.subheader(" Learning Categories")
+    learning_df = pd.read_sql_query(config_file["learning_tracker_category_count_Script"],conn)
+    
+    if learning_df.empty:
+        st.info("No learning records available.")
+    else:
+        st.bar_chart(learning_df.set_index("category"))
+
+
+
+    st.subheader(" Certification Progress")
+    cert_df = pd.read_sql_query(config_file["certification_Dashboard_Script"],conn)
+    if cert_df.empty:
+        st.info("No Certification records available.")
+
+    else:
+        st.dataframe(cert_df)
+
+        for _, row in cert_df.iterrows():
+            st.write(row["Certification_name"])
+            st.progress(int(row["progress"]) / 100)
 # ---------------------------------------------------
 # DAILY REVIEW
 # ---------------------------------------------------
@@ -320,3 +396,4 @@ elif page == "AI Coach":
         finally:
 
             conn.close()
+
