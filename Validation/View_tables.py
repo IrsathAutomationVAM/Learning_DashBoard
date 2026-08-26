@@ -3,14 +3,13 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import sqlite3
-import json
+from Agents.database import get_connection,get_config
 
-conn = sqlite3.connect("logs.db")
+conn = get_connection()
 cursor = conn.cursor()
 
-with open("config.json", "r") as file:
-        config_file = json.load(file)
+
+config_file = get_config
 
 tables = cursor.execute(config_file["Table_View_Script"]).fetchall()
 

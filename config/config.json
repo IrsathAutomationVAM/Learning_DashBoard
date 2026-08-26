@@ -29,8 +29,16 @@
     "Learning_Concepts_Items":
     ["Guidewire","AI","Python","SQL","Testing","TypeScript"],
     
-    "Learning_Category":
-    ["Dashboard","Daily Review","Learning Tracker","Weekly Review","Certification Tracker","Monthly Review","AI Coach","View History"],
+    "Pages": {
+                "dashboard": "Dashboard",
+                "daily_review": "Daily Review",
+                "learning_tracker": "Learning Tracker",
+                "weekly_review": "Weekly Review",
+                "certification_tracker": "Certification Tracker",
+                "monthly_review": "Monthly Review",
+                "ai_coach": "AI Coach",
+                "view_history": "View History"
+                },
     
     "Save_Daily_review_Script":
     "INSERT INTO daily_logs(log_date,accomplishments,learnings,blockers,tomorrow_plan,productivity)VALUES(?, ?, ?, ?, ?, ?)",

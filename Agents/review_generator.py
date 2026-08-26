@@ -1,15 +1,12 @@
-import sqlite3
-import json
+from Agents.database import get_config,get_connection
 
 def get_weekly_summary():
 
-    conn = sqlite3.connect("logs.db")
+    conn = get_connection()
     cursor = conn.cursor()
 
-    with open("config.json", "r") as file:
-        config_file = json.load(file)
+    config_file = get_config()
     User_Script = config_file["Review_Script"]+ " ORDER BY id DESC LIMIT 7"
-    print(User_Script)
     data = cursor.execute(User_Script).fetchall()
 
     conn.close()

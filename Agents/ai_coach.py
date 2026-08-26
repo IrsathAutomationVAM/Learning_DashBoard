@@ -1,19 +1,17 @@
 # ai_coach.py
-
-import json
 import logging as log
+from Agents.database import get_config, get_connection, get_prompt
+from Agents.database import get_user_details
+from Agents.ai_helper import ask_ai
 
-from ai_helper import ask_ai
 
-def get_ai_coaching(cursor):
+def get_ai_coaching():
 
     try:
-
+        conn = get_connection()
+        cursor = conn.cursor()
         log.info("AI Coach Connected with DB")
-
-        with open("config.json", "r") as file:
-            config_file = json.load(file)
-
+        config_file=get_config()
         query = (config_file["Review_Script"]+ " ORDER BY id DESC LIMIT 20")
         logs = cursor.execute(query).fetchall()
         log.info("Rows Retrieved: %s", len(logs))
@@ -34,19 +32,7 @@ def get_ai_coaching(cursor):
                         {row[2]}
                         """
 
-        prompt = f"""You are Irsath's personal AI mentor.
-                    Analyze the following history:
-                    {summary}
-                    Provide:
-                    1. Strengths
-                    2. Weaknesses
-                    3. Skill Gaps
-                    4. Learning Recommendations
-                    5. Certification Recommendations
-                    6. Career Guidance for a Software Testing Engineer
-                    
-                    Use professional language.
-                    """
+        prompt = get_prompt("ai_coach",data=get_user_details()+"\n"+summary)
 
         log.info("Sending prompt to OpenRouter")
         response = ask_ai(prompt)

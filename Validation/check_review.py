@@ -2,8 +2,8 @@ import sys
 import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from review_generator import get_weekly_summary
-from ai_helper import ask_ai
+from Agents.review_generator import get_weekly_summary
+from Agents.ai_helper import ask_ai
 
 weekly_data = get_weekly_summary()
 

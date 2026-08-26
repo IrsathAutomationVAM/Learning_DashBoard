@@ -1,0 +1,24 @@
+{
+  "user_persona": {
+    "name": "Irsath Ahamed",
+    "role": [
+      "Software Testing Engineer",
+      "AI Engineer"
+    ],
+    "experience": "4 Years",
+    "domain": "P&C Insurance",
+    "skills": [
+      "Guidewire PolicyCenter",
+      "Selenium",
+      "Playwright",
+      "TypeScript",
+      "Python",
+      "Generative AI"
+    ],
+    "career_goals": [
+      "Guidewire Certification",
+      "Automation Architect",
+      "AI Engineering"
+    ]
+  }
+}

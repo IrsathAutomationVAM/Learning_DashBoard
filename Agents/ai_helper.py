@@ -43,7 +43,7 @@ def ask_ai(prompt):
                         "content": prompt
                     }
                 ]
-            }
+            },timeout=45
         )
 
         data = response.json()

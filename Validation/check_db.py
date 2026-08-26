@@ -1,7 +1,11 @@
+import sys
+import os
 
-import sqlite3
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-connection = sqlite3.connect("logs.db")
+from Agents.database import get_connection
+
+connection = get_connection()
 convalue = connection.cursor()
 
 rows = convalue.execute(
