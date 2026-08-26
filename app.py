@@ -95,9 +95,6 @@ if page == Pages["dashboard"]:
         for _, row in cert_df.iterrows():
             st.write(row["Certification_name"])
             st.progress(int(row["progress"]) / 100)
-# ---------------------------------------------------
-# DAILY REVIEW
-# ---------------------------------------------------
 
 # ---------------------------------------------------
 # DAILY REVIEW
@@ -106,9 +103,7 @@ if page == Pages["dashboard"]:
 if page == Pages["daily_review"]:
 
     st.header("Daily Review")
-    st.caption(
-        "Capture accomplishments, learnings, blockers and plans for tomorrow."
-    )
+    st.caption("Capture accomplishments, learnings, blockers and plans for tomorrow.")
 
     # Initialize Session State
 
@@ -210,7 +205,7 @@ if page == Pages["daily_review"]:
                 log.info("Daily Review Saved")
 
                 st.success(
-                    "✅ Daily Review saved successfully."
+                    "Daily Review saved successfully."
                 )
 
                 # Clear Form Values
