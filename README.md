@@ -1,4 +1,5 @@
 # GrowthMate 
+[![GrowthMate CI](https://github.com/IrsathAutomationVAM/Learning_DashBoard/actions/workflows/growthmate-ci.yml/badge.svg)](https://github.com/IrsathAutomationVAM/Learning_DashBoard/actions/workflows/growthmate-ci.yml)
 ### AI-Powered Learning, Productivity & Career Growth Assistant
 
 GrowthMate is a personal productivity, learning, certification, and career development platform built using Streamlit, SQLite, and AI-powered coaching through OpenRouter/NVIDIA Nemotron.
