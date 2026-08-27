@@ -13,7 +13,9 @@ from Agents.ai_helper import ask_ai
 from Agents.ai_coach import get_ai_coaching
 from Agents.review_generator import get_weekly_summary
 from Agents.monthly_review import generate_monthly_review
+from Database.init_db import initialize_database
 
+initialize_database()
 # ---------------------------------------------------
 # CONFIG
 # ---------------------------------------------------
