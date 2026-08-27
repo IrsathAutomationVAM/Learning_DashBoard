@@ -1,0 +1,69 @@
+name: GrowthMate CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - Develop_Frame
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-validate:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Validate Python Syntax
+        run: |
+          python -m py_compile app.py
+
+      - name: Validate Agent Imports
+        run: |
+          python -c "from Agents.database import get_config,get_connection,get_prompt,get_style,get_user_details"
+
+      - name: Validate Configuration Files
+        run: |
+          python -c "from Agents.database import get_config; print('Config Loaded Successfully')"
+
+      - name: Validate Prompts
+        run: |
+          python -c "from Agents.database import get_prompt; print('Prompt Engine Loaded Successfully')"
+
+      - name: Validate User Persona
+        run: |
+          python -c "from Agents.database import get_user_details; print(get_user_details())"
+
+      - name: Validate Database Connectivity
+        run: |
+          python Validation/check_db.py
+
+      - name: Validate Review Generation Logic
+        run: |
+          python Validation/check_review.py
+
+      - name: Validate AI Configuration
+        run: |
+          python Validation/check_ai.py
+
+      - name: Success
+        run: |
+          echo "GrowthMate Build Validation Completed Successfully"
