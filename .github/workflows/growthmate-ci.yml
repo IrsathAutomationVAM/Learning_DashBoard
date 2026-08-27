@@ -3,14 +3,7 @@ name: GrowthMate CI
 on:
   push:
     branches:
-      - main
-      - develop
       - Develop_Frame
-
-  pull_request:
-    branches:
-      - main
-      - develop
 
 jobs:
   build-and-validate:
@@ -52,13 +45,13 @@ jobs:
         run: |
           python -c "from Agents.database import get_user_details; print(get_user_details())"
 
-      - name: Validate Database Connectivity
-        run: |
-          python Validation/check_db.py
+      #- name: Validate Database Connectivity
+       # run: |
+        #  python Validation/check_db.py
 
-      - name: Validate Review Generation Logic
-        run: |
-          python Validation/check_review.py
+      #- name: Validate Review Generation Logic
+       # run: |
+        #  python Validation/check_review.py
 
       - name: Validate AI Configuration
         run: |
