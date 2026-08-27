@@ -29,6 +29,3 @@ def get_weekly_summary():
 
     return summary
 
-
-if __name__ == "__main__":
-    print(get_weekly_summary())

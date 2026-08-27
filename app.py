@@ -344,7 +344,7 @@ elif page == Pages["certification_tracker"]:
 
 elif page == Pages["monthly_review"]:
     st.header(" Monthly Review")
-
+    log.info("Monthly Review was launched successfully")
     if st.button("Generate Monthly Review"):
         st.write(generate_monthly_review())
         log.info("Monthly Review Generated")
